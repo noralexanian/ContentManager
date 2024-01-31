@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+  # MySQL Service
+  contentmanager_db:
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+    image: mysql:5.7.22
+    container_name: contentmanager_db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: contentmanager
+      MYSQL_ROOT_PASSWORD: 123abc123
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql/
+    networks:
+      - app-network
+
+  # PHP Service
+  contentmanager_back:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: digitalocean.com/php
+    container_name: contentmanager_back
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    volumes:
+      - ./back/:/var/www
+      - ./back/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+    # command: ["db", "root", "123abc123", "php-fpm"]
+    depends_on:
+      contentmanager_db:
+        condition: service_healthy
+
+  contentmanager_nginx:
+    image: nginx:alpine
+    container_name: contentmanager_nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./back/:/var/www
+      - ./back/nginx/conf.d/:/etc/nginx/conf.d/
+      - /etc/ssl/certs/selfsigned.crt:/etc/nginx/ssl/selfsigned.crt
+      - /etc/ssl/private/selfsigned.key:/etc/nginx/ssl/selfsigned.key
+    networks:
+      - app-network
+    depends_on:
+      contentmanager_back:
+        condition: service_started
+
+# Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+# Volumes
+volumes:
+  dbdata:
+    driver: local
