@@ -57,6 +57,7 @@ services:
       contentmanager_back:
         condition: service_started
 
+
 # Docker Networks
 networks:
   app-network:
