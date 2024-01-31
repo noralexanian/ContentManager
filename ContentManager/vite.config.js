@@ -25,7 +25,8 @@ import laravel from 'laravel-vite-plugin';
 export default defineConfig({
     server: {
         hmr: {
-            host: 'http://167.99.206.27:8081',
+            host: '167.99.206.27',
+            port: 8081
         }
     },
     plugins: [
