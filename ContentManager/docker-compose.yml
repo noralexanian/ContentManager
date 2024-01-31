@@ -50,7 +50,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "80:80"
+      - "8081:80"
       - "8443:443"
     volumes:
       - ./back/:/var/www
