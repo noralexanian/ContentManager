@@ -1,13 +1,37 @@
-# build stage
-FROM node:lts-alpine as build-stage
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+# Start with the official PHP 8.2 image
+FROM php:8.2-fpm
 
-# production stage
-FROM nginx as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-COPY default.conf /etc/nginx/conf.d/default.conf
-CMD ["nginx", "-g", "daemon off;"]
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    default-mysql-client  # add this line
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www
+
+# Copy existing application directory contents
+COPY --chown=www-data:www-data . .
+
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+
+# Change current user to root
+USER root
+
+# Change back to www-data
+USER www-data
