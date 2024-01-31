@@ -39,24 +39,6 @@ services:
     depends_on:
       contentmanager_db:
         condition: service_healthy
-  # contentmanager_back:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   image: digitalocean.com/php
-  #   container_name: contentmanager_back
-  #   restart: unless-stopped
-  #   tty: true
-  #   working_dir: /var/www
-  #   volumes:
-  #     - ./:/var/www
-  #     - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
-  #   networks:
-  #     - app-network
-  #   # command: ["db", "root", "123abc123", "php-fpm"]
-  #   depends_on:
-  #     contentmanager_db:
-  #       condition: service_healthy
 
   contentmanager_nginx:
     image: nginx:alpine
@@ -67,7 +49,7 @@ services:
       - "8081:80"
       - "8443:443"
     volumes:
-      - ./back/:/var/www
+      - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - /etc/ssl/certs/selfsigned.crt:/etc/nginx/ssl/selfsigned.crt
       - /etc/ssl/private/selfsigned.key:/etc/nginx/ssl/selfsigned.key

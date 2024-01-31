@@ -5,7 +5,6 @@
         <div class="col-12 col-md-10 col-lg-6">
             <a href="{{ url('/') }}" class="btn btn-outline-secondary mb-3">Back</a>
             <h3 class="header text-center">{{ $article->title }}</h3>
-            <a href="{{ url('/articles', [$article->slug, 'edit']) }}" class="btn btn-sm btn-outline-warning">Edit</a>
             <div class="article-body mt-2">
                 <p>{{ $article->content }}</p>
             </div>
