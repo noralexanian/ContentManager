@@ -1,7 +1,7 @@
-# Use the official PHP image with FPM
+# Start with the official PHP image
 FROM php:8.2-fpm
 
-# Install system dependencies (and any PHP extensions you need)
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -11,13 +11,19 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip
 
-# Install Composer globally
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set the working directory to /var/www
+# Set working directory
 WORKDIR /var/www
 
-# Copy the application files to the container
+# Copy existing application directory contents
 COPY . /var/www
 
 # Install Composer dependencies
