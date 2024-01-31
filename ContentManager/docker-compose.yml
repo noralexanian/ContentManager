@@ -49,15 +49,16 @@ services:
       - "8081:80"
       - "8443:443"
     volumes:
-      - ./:/var/www
+      - ./public:/var/www/public
       - ./nginx/conf.d/:/etc/nginx/conf.d/
-      - /etc/ssl/certs/selfsigned.crt:/etc/nginx/ssl/selfsigned.crt
-      - /etc/ssl/private/selfsigned.key:/etc/nginx/ssl/selfsigned.key
-    networks:
+    #   - /etc/ssl/certs/selfsigned.crt:/etc/nginx/ssl/selfsigned.crt
+    #   - /etc/ssl/private/selfsigned.key:/etc/nginx/ssl/selfsigned.key
+    # networks:
       - app-network
     depends_on:
       contentmanager_back:
         condition: service_started
+
 
 # Docker Networks
 networks:
