@@ -1,18 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArticleController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/', [ArticleController::class, 'home']);
+Route::resource('articles', ArticleController::class);
+// Route::resource('articles', ArticleController::class)->except(['create', 'edit']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/articles/create', [ArticleController::class, 'create']);
+// Route::post('/articles', [ArticleController::class, 'store']);
+// Route::get('/articles/{slug}', [ArticleController::class, 'show']);
+// Route::get('/articles/{slug}/edit', [ArticleController::class, 'edit']);
+// Route::put('/articles/{slug}', [ArticleController::class, 'update']);
+// Route::delete('/articles/{slug}', [ArticleController::class, 'destroy']);
