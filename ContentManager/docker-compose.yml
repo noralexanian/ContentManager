@@ -51,9 +51,7 @@ services:
     volumes:
       - ./public:/var/www/public
       - ./nginx/conf.d/:/etc/nginx/conf.d/
-    #   - /etc/ssl/certs/selfsigned.crt:/etc/nginx/ssl/selfsigned.crt
-    #   - /etc/ssl/private/selfsigned.key:/etc/nginx/ssl/selfsigned.key
-    # networks:
+    networks:
       - app-network
     depends_on:
       contentmanager_back:
