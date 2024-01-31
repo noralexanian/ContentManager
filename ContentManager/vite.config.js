@@ -23,12 +23,6 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
-    server: {
-        hmr: {
-            host: '167.99.206.27',
-            port: 8081
-        }
-    },
     plugins: [
         laravel({
             input: [
@@ -37,6 +31,7 @@ export default defineConfig({
                 'resources/js/article.js'
             ],
             refresh: true,
+            publicPath: "./public/"
         }),
     ],
 });
