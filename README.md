@@ -2,6 +2,9 @@
 
 This Laravel project is a content management system for articles. It allows creating, viewing, editing, and deleting articles.
 
+## View online
+Access online website at http://167.99.206.27:8081
+
 ## Installation
 
 1. **Clone the Repository**
