@@ -11,3 +11,21 @@
         </div>
     </div>
 @endsection
+
+
+@push('styles')
+<style>
+.header {
+    background: #e2f2e6;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.article-body {
+    background: #f4f4f4;
+    border-radius: 15px;
+    padding: 20px;
+    min-height: 200px;
+}
+</style>
+@endpush
