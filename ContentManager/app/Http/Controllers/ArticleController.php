@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Article;
 use Illuminate\Support\Str;
 
-
 class ArticleController extends Controller
 {
     // View Controlers
