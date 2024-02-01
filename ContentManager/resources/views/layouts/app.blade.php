@@ -19,8 +19,8 @@
     @stack('scripts')
 
     <!-- JS -->
-    @vite('resources/js/article.js')
+    <!-- @vite('resources/js/article.js') -->
     <!-- Styles -->
-    @vite(['resources/css/app.css'])
+    <!-- @vite(['resources/css/app.css']) -->
 </body>
 </html>
